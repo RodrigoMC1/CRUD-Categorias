@@ -59,3 +59,74 @@ SELECT
 FROM pg_constraint con
 WHERE con.conrelid = 'public.produtos'::regclass
   AND con.contype = 'f';
+
+
+
+##################
+-- Execute conectado ao database api_fundamentos.
+-- Estrutura didática: categorias 1:N produtos.
+
+-- 1. Criar categorias.
+CREATE TABLE IF NOT EXISTS categorias (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(80) NOT NULL UNIQUE,
+    descricao VARCHAR(255)
+);
+
+-- 2. Criar produtos.
+CREATE TABLE IF NOT EXISTS produtos (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    preco DECIMAL(12,2) NOT NULL,
+    ativo BOOLEAN NOT NULL DEFAULT TRUE,
+    CONSTRAINT chk_produtos_preco CHECK (preco >= 0)
+);
+
+-- 3. Adicionar a coluna que representa o lado N do relacionamento.
+ALTER TABLE produtos
+    ADD COLUMN categoria_id BIGINT;
+
+-- 4. Criar a chave estrangeira: uma categoria possui vários produtos.
+-- Verifica se a FK já existe antes de criar.
+SET @fk_exists = (
+    SELECT COUNT(*)
+    FROM information_schema.TABLE_CONSTRAINTS
+    WHERE CONSTRAINT_SCHEMA = DATABASE()
+      AND TABLE_NAME = 'produtos'
+      AND CONSTRAINT_NAME = 'fk_produtos_categorias'
+      AND CONSTRAINT_TYPE = 'FOREIGN KEY'
+);
+
+SET @sql = IF(
+    @fk_exists = 0,
+    'ALTER TABLE produtos
+        ADD CONSTRAINT fk_produtos_categorias
+        FOREIGN KEY (categoria_id)
+        REFERENCES categorias(id)
+        ON UPDATE CASCADE
+        ON DELETE SET NULL',
+    'SELECT ''Foreign key fk_produtos_categorias já existe'''
+);
+
+-- 5. Criar índice para consultas por categoria.
+CREATE INDEX idx_produtos_categoria_id
+    ON produtos (categoria_id);
+
+-- 6. Conferir tabelas, colunas e relacionamento criados.
+SELECT
+    TABLE_NAME,
+    COLUMN_NAME,
+    DATA_TYPE
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_SCHEMA = DATABASE()
+  AND TABLE_NAME IN ('categorias', 'produtos')
+ORDER BY TABLE_NAME, ORDINAL_POSITION;
+
+SELECT
+    CONSTRAINT_NAME,
+    TABLE_NAME,
+    REFERENCED_TABLE_NAME
+FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE
+WHERE TABLE_SCHEMA = DATABASE()
+  AND TABLE_NAME = 'produtos'
+  AND REFERENCED_TABLE_NAME IS NOT NULL;
