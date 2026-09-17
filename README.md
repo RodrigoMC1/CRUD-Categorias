@@ -1,3 +1,10 @@
+# GRUPO 04
+Kenia Santos Sabaliauskas
+Luiz Eduardo Ramos de Souza
+Michelle Lima Cabral
+Rodrigo Gomes Ferreira
+Rodrigo Machado Camara
+
 # Fundamentos de API Java + PostgreSQL
 
 API REST didática de produtos, construída com Java 25, Spring Boot, Spring Data JPA e PostgreSQL. O projeto inclui Swagger, coleção Postman e scripts SQL para demonstrar o relacionamento `categorias 1:N produtos`.
