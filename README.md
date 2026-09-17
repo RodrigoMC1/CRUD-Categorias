@@ -1,9 +1,10 @@
 # GRUPO 04
-Kenia Santos Sabaliauskas
-Luiz Eduardo Ramos de Souza
-Michelle Lima Cabral
-Rodrigo Gomes Ferreira
-Rodrigo Machado Camara
+
+- Kenia Santos Sabaliauskas;
+- Luiz Eduardo Ramos de Souza;
+- Michelle Lima Cabral;
+- Rodrigo Gomes Ferreira;
+- Rodrigo Machado Camara.
 
 # Fundamentos de API Java + PostgreSQL
 
