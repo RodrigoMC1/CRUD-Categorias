@@ -1,3 +1,11 @@
+# GRUPO 04
+
+- Kenia Santos Sabaliauskas;
+- Luiz Eduardo Ramos de Souza;
+- Michelle Lima Cabral;
+- Rodrigo Gomes Ferreira;
+- Rodrigo Machado Camara.
+
 # Fundamentos de API Java + PostgreSQL
 
 API REST didática de produtos e categorias, construída com Java 25, Spring Boot, Spring Data JPA e PostgreSQL. Este projeto apresenta dois CRUDs independentes; relacionamentos e estoque entram no Projeto 06 / Aula 23.
