@@ -1,3 +1,7 @@
+-- Execute fora de uma transacao, conectado ao banco postgres.
+CREATE DATABASE api_fundamentos;
+
+
 -- Execute conectado ao database api_fundamentos.
 -- Estrutura didatica: categorias 1:N produtos.
 

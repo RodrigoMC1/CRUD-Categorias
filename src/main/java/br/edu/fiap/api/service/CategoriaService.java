@@ -1,9 +1,13 @@
 package br.edu.fiap.api.service;
 
+import br.edu.fiap.api.controller.dto.CategoriaResumoResponse;
 import br.edu.fiap.api.entity.Categoria;
 import br.edu.fiap.api.exception.CategoriaNaoEncontradaException;
 import br.edu.fiap.api.repository.CategoriaRepository;
 import java.util.List;
+
+import br.edu.fiap.api.repository.ProdutoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,5 +44,11 @@ public class CategoriaService {
     @Transactional
     public void excluir(Long id) {
         repository.delete(buscar(id));
+    }
+
+    public CategoriaResumoResponse buscarResumo(Long id) {
+        Categoria categoria = buscar(id);
+        long totalProduto = categoria.getProdutos().size();
+        return CategoriaResumoResponse.de(categoria,totalProduto);
     }
 }

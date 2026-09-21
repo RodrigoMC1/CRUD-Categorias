@@ -2,6 +2,7 @@ package br.edu.fiap.api.controller;
 
 import br.edu.fiap.api.controller.dto.CategoriaRequest;
 import br.edu.fiap.api.controller.dto.CategoriaResponse;
+import br.edu.fiap.api.controller.dto.CategoriaResumoResponse;
 import br.edu.fiap.api.entity.Categoria;
 import br.edu.fiap.api.service.CategoriaService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -48,6 +49,17 @@ public class CategoriaController {
     public CategoriaResponse buscar(
             @Parameter(example = "1") @PathVariable Long id) {
         return CategoriaResponse.de(service.buscar(id));
+    }
+
+    @GetMapping("/{id}/resumo")
+    @Operation(summary = "Buscar categoria por ID e mostrar o Resumo")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Categoria encontrada"),
+            @ApiResponse(responseCode = "404", description = "Categoria não encontrada")
+    })
+    public CategoriaResumoResponse buscarResumo(
+            @Parameter(example = "1") @PathVariable Long id) {
+        return service.buscarResumo(id);
     }
 
     @PostMapping
